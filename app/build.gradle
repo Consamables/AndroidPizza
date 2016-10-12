@@ -30,7 +30,9 @@ dependencies {
 
     compile 'com.google.firebase:firebase-auth:9.6.1'
     compile 'com.facebook.android:facebook-android-sdk:4.15.0'
-//    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+
+    compile 'com.firebaseui:firebase-ui-auth:0.6.0'
+    compile 'com.github.badoualy:stepper-indicator:1.0.6'
 }
 
 apply plugin: 'com.google.gms.google-services'
