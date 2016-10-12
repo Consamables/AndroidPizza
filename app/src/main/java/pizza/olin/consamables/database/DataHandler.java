@@ -5,11 +5,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import pizza.olin.consamables.types.HalfPizza;
 import pizza.olin.consamables.types.Order;
-import pizza.olin.consamables.types.User;
 import pizza.olin.consamables.types.WholePizza;
 
 /**
- * Created by Sam on 10/11/2016.
+ * An interface for writing data to Firebase.
  */
 
 public class DataHandler {

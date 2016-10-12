@@ -1,9 +1,5 @@
 package pizza.olin.consamables.types;
 
-/**
- * Created by Sam on 10/12/2016.
- */
-
 public class Topping {
 
     private String uid;

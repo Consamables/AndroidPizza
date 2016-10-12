@@ -1,9 +1,5 @@
 package pizza.olin.consamables.types;
 
-/**
- * Created by Sam on 10/11/2016.
- */
-
 public class WholePizza {
 
     private String uid;

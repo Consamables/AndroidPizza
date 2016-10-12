@@ -1,20 +1,18 @@
 package pizza.olin.consamables.types;
 
-import java.util.ArrayList;
+import com.google.firebase.auth.FirebaseUser;
 
-/**
- * Created by Sam on 10/11/2016.
- */
+import java.util.ArrayList;
 
 public class HalfPizza {
 
     private String uid;
-    private User user;
+    private FirebaseUser user;
     private ArrayList<Topping> toppings;
 
     public HalfPizza() { }
 
-    public HalfPizza(User user, ArrayList<Topping> toppings) {
+    public HalfPizza(FirebaseUser user, ArrayList<Topping> toppings) {
         this.user = user;
         this.toppings = toppings;
     }
@@ -27,11 +25,11 @@ public class HalfPizza {
         this.uid = uid;
     }
 
-    public User getUser() {
+    public FirebaseUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(FirebaseUser user) {
         this.user = user;
     }
 

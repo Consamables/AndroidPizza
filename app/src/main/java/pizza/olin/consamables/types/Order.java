@@ -2,21 +2,17 @@ package pizza.olin.consamables.types;
 
 import java.util.Date;
 
-/**
- * Created by Sam on 10/11/2016.
- */
-
 public class Order {
 
     private String uid;
     private Date startTime;
-    private int duration;
+    private int durationMinutes;
 
     public Order() { }
 
-    public Order(int duration) {
+    public Order(int durationMinutes) {
         this.startTime = new Date();
-        this.duration = duration;
+        this.durationMinutes = durationMinutes;
     }
 
     public String getUid() {
@@ -35,11 +31,11 @@ public class Order {
         this.startTime = startTime;
     }
 
-    public int getDuration() {
-        return duration;
+    public int getDurationMinutes() {
+        return durationMinutes;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public void setDurationMinutes(int durationMinutes) {
+        this.durationMinutes = durationMinutes;
     }
 }
