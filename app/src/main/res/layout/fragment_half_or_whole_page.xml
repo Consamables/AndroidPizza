@@ -18,7 +18,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:backgroundTint="@color/colorPrimaryLight"
-        android:layout_marginTop="60dp" />
+        android:layout_marginTop="80dp" />
 
     <Button
         android:text="Whole"
