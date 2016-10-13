@@ -48,13 +48,15 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
     private SharedPrefsHandler prefsHandler;
 
     private OrderBuilder orderBuilder;
+    private ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wizard);
 
-        final ViewPager pager = (ViewPager) findViewById(R.id.pager);
+
+        pager = (ViewPager) findViewById(R.id.pager);
 
         assert pager != null;
         ArrayList<Fragment> wizardSteps = new ArrayList<>();
@@ -219,6 +221,7 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
     @Override
     public void setPizzaType(PizzaOrderType type) {
         orderBuilder.setPizzaType(type);
+        pager.setCurrentItem(pager.getCurrentItem() + 1, true);
     }
 
     @Override

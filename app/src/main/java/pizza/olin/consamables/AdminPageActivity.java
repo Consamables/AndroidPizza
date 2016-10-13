@@ -1,6 +1,7 @@
 package pizza.olin.consamables;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewCompat;
@@ -11,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
@@ -23,6 +25,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import pizza.olin.consamables.data.FirebaseHandler;
 import pizza.olin.consamables.types.GroupOrder;
@@ -32,9 +35,12 @@ import pizza.olin.consamables.types.Topping;
 
 public class AdminPageActivity extends AppCompatActivity {
 
+    private static final long UPDATE_TIMER_MS = 1000;
     private FirebaseHandler handler;
     private Optional<GroupOrder> maybeNewestOrder = Optional.empty();
     private FloatingActionButton fab;
+    private TextView timeLeft;
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +51,7 @@ public class AdminPageActivity extends AppCompatActivity {
 
         handler = new FirebaseHandler();
 
-
+        timeLeft = (TextView) findViewById(R.id.time_left_order);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +109,7 @@ public class AdminPageActivity extends AppCompatActivity {
     private void updateListView(GroupOrder order) {
         ListView listView = (ListView) findViewById(R.id.order_list);
         ArrayList<OrderItem> orderItems = new ArrayList<>();
+        //TODO: get the actual list
         listView.setAdapter(new OrderItemsAdapter(this, orderItems));
     }
 
@@ -112,6 +119,42 @@ public class AdminPageActivity extends AppCompatActivity {
 
             updatePizzaButton(newestOrder.isClosed);
             updateListView(newestOrder);
+            updateTimer();
+        }
+    }
+
+    private void updateTimer() {
+        if (maybeNewestOrder.isPresent()) {
+            GroupOrder newestOrder = maybeNewestOrder.get();
+
+            if (!newestOrder.isClosed) {
+                long timeLeftInOrder = (newestOrder.getStartTime().getTime() +
+                        (newestOrder.getDurationMinutes() * 60 * 1000)) - new Date().getTime();
+
+                if (countDownTimer != null) {
+                    countDownTimer.cancel();
+                }
+
+                countDownTimer = new CountDownTimer(timeLeftInOrder, UPDATE_TIMER_MS) {
+
+                    public void onTick(long millisUntilFinished) {
+                        timeLeft.setText(String.format(
+                                "%02d:%02d",
+                                millisUntilFinished / 1000 / 60,
+                                millisUntilFinished / 1000 % 60));
+                    }
+
+                    public void onFinish() {
+                        timeLeft.setText(R.string.order_finished);
+                    }
+                }.start();
+            } else {
+                if (countDownTimer != null) {
+                    countDownTimer.cancel();
+                }
+
+                timeLeft.setText("Time's up!");
+            }
         }
     }
 

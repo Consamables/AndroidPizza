@@ -8,30 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OrderListListener} interface
- * to handle interaction events.
- * Use the {@link OrderList#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class OrderList extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class OrderListFragment extends Fragment {
     private static final String ARG_ORDER_ID = "order_id";
 
     private String orderId;
 
     private OrderListListener mListener;
 
-    public OrderList() {
+    public OrderListFragment() {
         // Required empty public constructor
     }
 
-    public static OrderList newInstance(String orderId) {
-        OrderList fragment = new OrderList();
+    public static OrderListFragment newInstance(String orderId) {
+        OrderListFragment fragment = new OrderListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_ORDER_ID, orderId);
         fragment.setArguments(args);
