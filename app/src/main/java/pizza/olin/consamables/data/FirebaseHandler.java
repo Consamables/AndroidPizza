@@ -1,4 +1,4 @@
-package pizza.olin.consamables.database;
+package pizza.olin.consamables.data;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -11,10 +11,10 @@ import pizza.olin.consamables.types.WholePizza;
  * An interface for writing data to Firebase.
  */
 
-public class DataHandler {
+public class FirebaseHandler {
     private DatabaseReference mDatabase;
 
-    public DataHandler() {
+    public FirebaseHandler() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
