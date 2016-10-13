@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -112,6 +113,13 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
                 if (!mEmail.endsWith("@students.olin.edu")) {
                     Toast.makeText(this, getString(R.string.no_olin_email), Toast.LENGTH_LONG)
                             .show();
+                } else {
+                    if (!mFirebaseUser.isEmailVerified()) {
+                        Toast.makeText(this, getString(R.string.email_not_verified), Toast.LENGTH_LONG)
+                                .show();
+                        mFirebaseUser.sendEmailVerification();
+                    }
+
                 }
             }
         }
@@ -143,6 +151,21 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_wizard, menu);
+
+        // hide by default
+        menu.findItem(R.id.action_admin_page).setVisible(false);
+
+        if (mFirebaseUser != null && mFirebaseUser.getEmail() != null && mFirebaseUser.isEmailVerified()) {
+            boolean isDanny = mFirebaseUser.getEmail().equals("daniel.wolf@students.olin.edu");
+            boolean isSam = mFirebaseUser.getEmail().equals("sam@students.olin.edu");
+
+            if (isDanny || isSam) { // yeah that's right
+                menu.findItem(R.id.action_admin_page).setVisible(true);
+            }
+        }
+
+
+
         return true;
     }
 
