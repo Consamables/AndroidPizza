@@ -22,6 +22,7 @@ public class OrderBuilder {
     private GroupOrder currentOrder;
 
     public OrderBuilder() {
+        pizzaType = PizzaOrderType.HALF;
         firstHalfToppings = new HashMap<>();
         secondHalfToppings = new HashMap<>();
     }
@@ -32,6 +33,10 @@ public class OrderBuilder {
 
     public void setPizzaType(PizzaOrderType pizzaType) {
         this.pizzaType = pizzaType;
+    }
+
+    public PizzaOrderType getPizzaType() {
+        return pizzaType;
     }
 
     public void setFirstHalfTopping(int index, Topping topping) {
