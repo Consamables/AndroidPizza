@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,7 +13,14 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@mipmap/half_pizza_icon"
+            android:id="@+id/imageView" />
 
         <Button
             android:text="@string/half_pizza"
@@ -31,5 +39,13 @@
             style="@style/Widget.AppCompat.Button"
             android:textSize="36sp"
             android:backgroundTint="@color/colorPrimaryLight" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@mipmap/whole_pizza_icon"
+            android:id="@+id/imageView2" />
+
     </LinearLayout>
+
 </RelativeLayout>
