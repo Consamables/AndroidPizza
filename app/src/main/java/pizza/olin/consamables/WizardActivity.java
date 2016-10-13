@@ -134,7 +134,6 @@ public class WizardActivity extends AppCompatActivity
                                 .show();
                         mFirebaseUser.sendEmailVerification();
                     }
-
                 }
             }
         }
@@ -244,6 +243,10 @@ public class WizardActivity extends AppCompatActivity
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public PizzaOrderType getPizzaType() {
+        return orderBuilder.getPizzaType();
     }
 
     @Override
