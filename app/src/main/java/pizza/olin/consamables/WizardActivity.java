@@ -28,10 +28,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import pizza.olin.consamables.data.SharedPrefsHandler;
+import pizza.olin.consamables.types.OrderBuilder;
 import pizza.olin.consamables.types.PizzaOrderType;
 import pizza.olin.consamables.types.Topping;
 
-public class WizardActivity extends AppCompatActivity implements HalfOrWholePage.PizzaTypeListener {
+public class WizardActivity extends AppCompatActivity implements HalfOrWholePage.PizzaTypeListener, ToppingSelectPage.ToppingSelectListener {
     private static final String TAG = "WizardActivity";
     private static final String ANONYMOUS = "anonymous";
     private static final int RC_SIGN_IN = 47;
@@ -40,6 +41,8 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
     private String mUsername;
 
     private SharedPrefsHandler prefsHandler;
+
+    private OrderBuilder orderBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +54,12 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
         assert pager != null;
         ArrayList<Fragment> wizardSteps = new ArrayList<>();
         wizardSteps.add(HalfOrWholePage.newInstance());
-        wizardSteps.add(ToppingSelectFragment.newInstance());
+        wizardSteps.add(ToppingSelectPage.newInstance());
         wizardSteps.add(WizardBasicPage.newInstance("Add a drink?"));
         wizardSteps.add(WizardBasicPage.newInstance("Pay"));
         wizardSteps.add(WizardBasicPage.newInstance("You're done!"));
 
-
         pager.setAdapter(new WizardPagerAdapter(getSupportFragmentManager(), wizardSteps));
-
 
         Button previousButton = (Button) findViewById(R.id.prev_button);
         Button nextButton = (Button) findViewById(R.id.next_button);
@@ -115,6 +116,8 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
                 }
             }
         }
+
+        orderBuilder = new OrderBuilder();
     }
 
     private void fetchFirebaseData() {
@@ -167,6 +170,16 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
 
     @Override
     public void setPizzaType(PizzaOrderType type) {
+        orderBuilder.setPizzaType(type);
+    }
 
+    @Override
+    public void setFirstHalfTopping(int index, Topping topping) {
+        orderBuilder.setFirstHalfTopping(index, topping);
+    }
+
+    @Override
+    public void setSecondHalfTopping(int index, Topping topping) {
+        orderBuilder.setSecondHalfTopping(index, topping);
     }
 }
