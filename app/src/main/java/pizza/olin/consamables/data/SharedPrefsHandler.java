@@ -7,12 +7,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
-import pizza.olin.consamables.types.Order;
+import pizza.olin.consamables.types.GroupOrder;
 import pizza.olin.consamables.types.Topping;
-
-/**
- * TODO: Add a class header comment!
- */
 
 public class SharedPrefsHandler {
 
@@ -34,7 +30,7 @@ public class SharedPrefsHandler {
         setValue("Toppings", toppings);
     }
 
-    public void setCurrentOrder(Order order) {
+    public void setCurrentOrder(GroupOrder order) {
         setValue("Current Order", order);
     }
 
@@ -44,9 +40,9 @@ public class SharedPrefsHandler {
         return allToppings;
     }
 
-    public Order getCurrentOrder() {
+    public GroupOrder getCurrentOrder() {
         String serializedOrder = prefs.getString("Current Order", "");
-        Order order = gson.fromJson(serializedOrder, Order.class);
+        GroupOrder order = gson.fromJson(serializedOrder, GroupOrder.class);
         return order;
     }
 }
