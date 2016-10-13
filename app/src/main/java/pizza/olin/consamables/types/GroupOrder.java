@@ -7,12 +7,22 @@ public class GroupOrder {
     private String uid;
     private Date startTime;
     private int durationMinutes;
+    public boolean isClosed; // firebase pls
 
-    public GroupOrder() { }
+    public GroupOrder() {
+    }
+
+    public GroupOrder(String uid, Date startTime, int durationMinutes, boolean isClosed) {
+        this.uid = uid;
+        this.startTime = startTime;
+        this.durationMinutes = durationMinutes;
+        this.isClosed = isClosed;
+    }
 
     public GroupOrder(int durationMinutes) {
-        this.startTime = new Date();
+        startTime = new Date();
         this.durationMinutes = durationMinutes;
+        isClosed = false;
     }
 
     public String getUid() {
