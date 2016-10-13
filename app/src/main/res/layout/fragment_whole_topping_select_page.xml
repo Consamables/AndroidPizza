@@ -25,7 +25,7 @@
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="150dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_alignParentTop="true"
@@ -37,7 +37,6 @@
         android:layout_below="@+id/spinner1a"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:id="@+id/spinner2a" />
@@ -48,7 +47,6 @@
         android:layout_below="@+id/spinner2a"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:id="@+id/spinner3a" />
@@ -59,14 +57,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="260dp"
+        android:layout_marginTop="300dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textSize="18sp" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="290dp"
+        android:layout_marginTop="320dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_alignParentTop="true"
@@ -78,7 +76,6 @@
         android:layout_below="@+id/spinner1b"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:id="@+id/spinner2b" />
@@ -89,7 +86,6 @@
         android:layout_below="@+id/spinner2b"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:id="@+id/spinner3b" />

@@ -44,15 +44,18 @@ public class ToppingSelectPage extends Fragment {
 
         prefsHandler = new SharedPrefsHandler(getActivity().getPreferences(Context.MODE_PRIVATE));
 
-        View myView;
+        View myView = inflater.inflate(R.layout.fragment_topping_container_layout, container, false);
+
+        View toppingView;
 
         if (mListener.getPizzaType() == HALF) {
-            myView = inflater.inflate(R.layout.fragment_half_topping_select_page, container, false);
+            toppingView = inflater.inflate(R.layout.fragment_half_topping_select_page, (ViewGroup) myView, false);
         } else {
-            myView = inflater.inflate(R.layout.fragment_whole_topping_select_page, container, false);
+            toppingView = inflater.inflate(R.layout.fragment_whole_topping_select_page, (ViewGroup) myView, false);
         }
 
-        configureView(myView);
+        configureView(toppingView);
+         ((ViewGroup) myView).addView(toppingView);
 
         return myView;
     }
@@ -62,16 +65,15 @@ public class ToppingSelectPage extends Fragment {
         super.setUserVisibleHint(isVisible);
 
         if (isVisible) {
-            View currentView = getView();
+            ViewGroup parent = (ViewGroup) getView();
+            View currentView = parent.getChildAt(0);
             int optionId = viewOptions.get(mListener.getPizzaType());
 
             if (currentView.getId() != optionId) {
-                ViewGroup parent =(ViewGroup) currentView.getParent();
-                int index = parent.indexOfChild(currentView);
                 parent.removeView(currentView);
                 currentView = getActivity().getLayoutInflater().inflate(optionId, parent, false);
                 configureView(currentView);
-                parent.addView(currentView, index);
+                parent.addView(currentView, 0);
             }
         }
     }
@@ -118,7 +120,7 @@ public class ToppingSelectPage extends Fragment {
             ArrayList<ToppingAdapter> leftAdapters = new ArrayList<>();
             ArrayList<ToppingAdapter> rightAdapters = new ArrayList<>();
 
-            for (int i = 0; 1 < 3; i++) {
+            for (int i = 0; i < 3; i++) {
                 leftSpinners.add((Spinner) myView.findViewById(leftSpinnerIds[i]));
                 rightSpinners.add((Spinner) myView.findViewById(rightSpinnerIds[i]));
 
