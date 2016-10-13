@@ -1,10 +1,11 @@
 package pizza.olin.consamables.types;
 
-public class WholePizza {
-
+public class WholePizza extends OrderItem {
     private String uid;
     private HalfPizza leftHalf;
     private HalfPizza rightHalf;
+
+    private int priceCents;
 
     public WholePizza() { }
 
@@ -35,5 +36,20 @@ public class WholePizza {
 
     public void setRightHalf(HalfPizza rightHalf) {
         this.rightHalf = rightHalf;
+    }
+
+    @Override
+    public int getPriceCents() {
+        return priceCents;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return "Whole Pizza";
+    }
+
+    @Override
+    public String getDisplayDetails() {
+        return leftHalf.getDisplayDetails() + " | " + rightHalf.getDisplayDetails();
     }
 }

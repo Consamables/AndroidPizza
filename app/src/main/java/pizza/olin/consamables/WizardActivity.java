@@ -21,7 +21,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
-public class WizardActivity extends AppCompatActivity {
+import pizza.olin.consamables.types.PizzaOrderType;
+
+public class WizardActivity extends AppCompatActivity implements HalfOrWholePage.PizzaTypeListener {
 
     private static final String TAG = "WizardActivity";
     private static final String ANONYMOUS = "anonymous";
@@ -39,7 +41,7 @@ public class WizardActivity extends AppCompatActivity {
 
         assert pager != null;
         ArrayList<Fragment> wizardSteps = new ArrayList<>();
-        wizardSteps.add(WizardBasicPage.newInstance("Half or whole?"));
+        wizardSteps.add(HalfOrWholePage.newInstance());
         wizardSteps.add(WizardBasicPage.newInstance("Toppinggss"));
         wizardSteps.add(WizardBasicPage.newInstance("Add a drink?"));
         wizardSteps.add(WizardBasicPage.newInstance("Pay"));
@@ -127,5 +129,10 @@ public class WizardActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void setPizzaType(PizzaOrderType type) {
+
     }
 }

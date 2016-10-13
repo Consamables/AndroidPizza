@@ -2,15 +2,15 @@ package pizza.olin.consamables.types;
 
 import java.util.Date;
 
-public class Order {
+public class GroupOrder {
 
     private String uid;
     private Date startTime;
     private int durationMinutes;
 
-    public Order() { }
+    public GroupOrder() { }
 
-    public Order(int durationMinutes) {
+    public GroupOrder(int durationMinutes) {
         this.startTime = new Date();
         this.durationMinutes = durationMinutes;
     }

@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pizza.olin.consamables.HalfOrWholePage">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <Button
+        android:text="Half"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_half"
+        style="@style/Widget.AppCompat.Button"
+        android:textSize="36sp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:backgroundTint="@color/colorPrimaryLight"
+        android:layout_marginTop="60dp" />
+
+    <Button
+        android:text="Whole"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_whole"
+        style="@style/Widget.AppCompat.Button"
+        android:textSize="36sp"
+        android:layout_below="@+id/button_half"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:backgroundTint="@color/colorPrimaryLight" />
+</RelativeLayout>
