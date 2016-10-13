@@ -2,32 +2,20 @@ package pizza.olin.consamables.types;
 
 import com.annimon.stream.Stream;
 import com.annimon.stream.function.BiFunction;
-import com.annimon.stream.function.Consumer;
-import com.annimon.stream.function.Function;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
 public class HalfPizza extends OrderItem {
-    private String uid;
+    public static final int BASE_PRICE = 500;
     private FirebaseUser user;
     private ArrayList<Topping> toppings;
-
-    private int priceCents;
 
     public HalfPizza() { }
 
     public HalfPizza(FirebaseUser user, ArrayList<Topping> toppings) {
         this.user = user;
         this.toppings = toppings;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
     }
 
     public FirebaseUser getUser() {
@@ -48,7 +36,11 @@ public class HalfPizza extends OrderItem {
 
     @Override
     public int getPriceCents() {
-        return priceCents;
+        if (beverage != null) {
+            return BASE_PRICE + beverage.getPriceCents();
+        } else {
+            return BASE_PRICE;
+        }
     }
 
     @Override

@@ -1,25 +1,15 @@
 package pizza.olin.consamables.types;
 
 public class WholePizza extends OrderItem {
-    private String uid;
+    public static final int BASE_PRICE = 1000;
     private HalfPizza leftHalf;
     private HalfPizza rightHalf;
-
-    private int priceCents;
 
     public WholePizza() { }
 
     public WholePizza(HalfPizza leftHalf, HalfPizza rightHalf) {
         this.leftHalf = leftHalf;
         this.rightHalf = rightHalf;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
     }
 
     public HalfPizza getLeftHalf() {
@@ -40,7 +30,11 @@ public class WholePizza extends OrderItem {
 
     @Override
     public int getPriceCents() {
-        return priceCents;
+        if (beverage != null) {
+            return BASE_PRICE + beverage.getPriceCents();
+        } else {
+            return BASE_PRICE;
+        }
     }
 
     @Override

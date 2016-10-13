@@ -8,6 +8,7 @@
     <string name="action_sign_out">Sign Out</string>
     <string name="no_olin_email">You didn\'t sign up using an Olin email address, this may result in a lack of pizza</string>
     <string name="topping_select">Select Toppings</string>
+    <string name="beverage_select">Care for a Drink?</string>
     <string name="action_admin_page">Admin Page</string>
     <string name="email_not_verified">Your email hasn\'t been verified, please check your email.</string>
     <string name="whole_pizza">Whole</string>
