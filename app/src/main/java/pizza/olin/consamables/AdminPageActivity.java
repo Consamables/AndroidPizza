@@ -39,8 +39,6 @@ public class AdminPageActivity extends AppCompatActivity {
 
         handler = new FirebaseHandler();
 
-
-
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,18 +47,17 @@ public class AdminPageActivity extends AppCompatActivity {
                 if (maybeNewestOrder.isPresent()) {
                     if (maybeNewestOrder.get().isClosed) {
                         // cool
-                        handler.createOrder(30);
+                        handler.createGroupOrder(30);
                     } else {
                         String uid = maybeNewestOrder.get().getUid();
-                        handler.closeOrder(uid);
+                        handler.closeGroupOrder(uid);
                     }
                 } else {
-                    handler.createOrder(30);
+                    handler.createGroupOrder(30);
                 }
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         fetchFirebaseData();
     }

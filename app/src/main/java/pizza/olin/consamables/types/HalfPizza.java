@@ -15,7 +15,12 @@ public class HalfPizza extends OrderItem {
 
     public HalfPizza(FirebaseUser user, ArrayList<Topping> toppings) {
         this.user = user;
-        this.toppings = toppings;
+        this.toppings = new ArrayList<>();
+        for (Topping topping : toppings) {
+            if (!topping.getName().equals("None")) {
+                this.toppings.add(topping);
+            }
+        }
     }
 
     public FirebaseUser getUser() {
@@ -50,13 +55,12 @@ public class HalfPizza extends OrderItem {
 
     @Override
     public String getDisplayDetails() {
-        return user.getDisplayName() + ": " +
-                Stream.of(toppings)
+        return Stream.of(toppings)
                 .reduce("", new BiFunction<String, Topping, String>() {
                     @Override
                     public String apply(String before, Topping topping) {
                         if (before.length() > 0) { // if not the first element
-                            return before + ", " + topping.getName();
+                            return before + "\n" + topping.getName();
                         }
 
                         return before + topping.getName();
