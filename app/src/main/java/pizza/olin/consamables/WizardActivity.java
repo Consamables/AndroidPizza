@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.badoualy.stepperindicator.StepperIndicator;
@@ -45,6 +47,24 @@ public class WizardActivity extends AppCompatActivity {
 
 
         pager.setAdapter(new WizardPagerAdapter(getSupportFragmentManager(), wizardSteps));
+
+
+        Button previousButton = (Button) findViewById(R.id.prev_button);
+        Button nextButton = (Button) findViewById(R.id.next_button);
+
+        previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pager.setCurrentItem(pager.getCurrentItem() - 1);
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pager.setCurrentItem(pager.getCurrentItem() + 1);
+            }
+        });
 
         StepperIndicator indicator = (StepperIndicator) findViewById(R.id.stepper_indicator);
         assert indicator != null;
