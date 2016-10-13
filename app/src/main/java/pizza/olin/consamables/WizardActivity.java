@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,17 +28,24 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import pizza.olin.consamables.data.FirebaseHandler;
 import pizza.olin.consamables.data.SharedPrefsHandler;
 import pizza.olin.consamables.pages.BeverageSelectPage;
+import pizza.olin.consamables.pages.FinishedOrderPage;
 import pizza.olin.consamables.pages.HalfOrWholePage;
+import pizza.olin.consamables.pages.OrderConfirmationPage;
 import pizza.olin.consamables.pages.ToppingSelectPage;
 import pizza.olin.consamables.pages.WizardBasicPage;
 import pizza.olin.consamables.types.Beverage;
-import pizza.olin.consamables.types.OrderBuilder;
+import pizza.olin.consamables.types.GroupOrder;
+import pizza.olin.consamables.types.OrderItem;
 import pizza.olin.consamables.types.PizzaOrderType;
 import pizza.olin.consamables.types.Topping;
 
-public class WizardActivity extends AppCompatActivity implements HalfOrWholePage.PizzaTypeListener, ToppingSelectPage.ToppingSelectListener, BeverageSelectPage.BeverageTypeListener {
+public class WizardActivity extends AppCompatActivity
+                            implements HalfOrWholePage.PizzaTypeListener, ToppingSelectPage.ToppingSelectListener,
+                                       BeverageSelectPage.BeverageTypeListener, OrderConfirmationPage.OrderConfirmationListener,
+                                       FinishedOrderPage.FinishedOrderListener {
     private static final String TAG = "WizardActivity";
     private static final String ANONYMOUS = "anonymous";
     private static final int RC_SIGN_IN = 47;
@@ -46,25 +54,30 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
     private String mUsername;
 
     private SharedPrefsHandler prefsHandler;
-
     private OrderBuilder orderBuilder;
     private ViewPager pager;
+    private FirebaseHandler firebaseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wizard);
 
-
         pager = (ViewPager) findViewById(R.id.pager);
+        orderBuilder = new OrderBuilder();
+        firebaseHandler = new FirebaseHandler();
+        prefsHandler = new SharedPrefsHandler(getPreferences(Context.MODE_PRIVATE));
+        fetchFirebaseData();
+
+        final ViewPager pager = (ViewPager) findViewById(R.id.pager);
 
         assert pager != null;
         ArrayList<Fragment> wizardSteps = new ArrayList<>();
         wizardSteps.add(HalfOrWholePage.newInstance());
         wizardSteps.add(ToppingSelectPage.newInstance());
         wizardSteps.add(BeverageSelectPage.newInstance());
-        wizardSteps.add(WizardBasicPage.newInstance("Pay"));
-        wizardSteps.add(WizardBasicPage.newInstance("You're done!"));
+        wizardSteps.add(OrderConfirmationPage.newInstance());
+        wizardSteps.add(FinishedOrderPage.newInstance());
 
         pager.setAdapter(new WizardPagerAdapter(getSupportFragmentManager(), wizardSteps));
 
@@ -111,9 +124,6 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
         } else {
             mUsername = mFirebaseUser.getDisplayName();
 
-            prefsHandler = new SharedPrefsHandler(getPreferences(Context.MODE_PRIVATE));
-            fetchFirebaseData();
-
             // see if user is using an Olin email (TODO: make this better)
             if (mFirebaseUser.getEmail() != null) {
                 String mEmail = mFirebaseUser.getEmail();
@@ -130,8 +140,6 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
                 }
             }
         }
-
-        orderBuilder = new OrderBuilder();
     }
 
     private void fetchFirebaseData() {
@@ -172,6 +180,28 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
             public void onCancelled(DatabaseError databaseError) {
 
             }
+        });
+
+        final DatabaseReference orderRef = database.getReference("orders");
+        orderRef.orderByChild("startTime/time").limitToLast(1).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                GroupOrder currentOrder = dataSnapshot.getValue(GroupOrder.class);
+                currentOrder.setUid(dataSnapshot.getKey());
+                orderBuilder.setCurrentOrder(currentOrder);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) { }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) { }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
         });
     }
 
@@ -237,5 +267,15 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
     @Override
     public void setBeverage(Beverage beverage) {
         orderBuilder.setBeverage(beverage);
+    }
+
+    @Override
+    public OrderItem getCurrentOrder() {
+        return orderBuilder.build();
+    }
+
+    @Override
+    public void confirmOrder() {
+        firebaseHandler.addOrder(orderBuilder.build());
     }
 }

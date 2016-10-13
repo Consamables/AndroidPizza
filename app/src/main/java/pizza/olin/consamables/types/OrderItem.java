@@ -31,6 +31,8 @@ public abstract class OrderItem {
     }
 
     public void setBeverage(Beverage beverage) {
-        this.beverage = beverage;
+        if (!beverage.getName().equals("No Thanks")) {
+            this.beverage = beverage;
+        }
     }
 }
