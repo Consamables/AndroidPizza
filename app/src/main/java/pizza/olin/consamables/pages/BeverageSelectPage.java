@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -43,14 +44,18 @@ public class BeverageSelectPage extends Fragment {
         BeverageAdapter adapter = new BeverageAdapter(getContext(), allBeverages);
         spinner.setAdapter(adapter);
 
-        return myView;
-    }
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Beverage selectedBeverage = (Beverage) parent.getItemAtPosition(position);
+                mListener.setBeverage(selectedBeverage);
+            }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Beverage beverage) {
-        if (mListener != null) {
-            mListener.setBeverage(beverage);
-        }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+
+        return myView;
     }
 
     @Override

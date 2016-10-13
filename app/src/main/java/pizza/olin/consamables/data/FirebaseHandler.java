@@ -5,6 +5,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import pizza.olin.consamables.types.HalfPizza;
 import pizza.olin.consamables.types.GroupOrder;
+import pizza.olin.consamables.types.OrderItem;
 import pizza.olin.consamables.types.WholePizza;
 
 /**
@@ -18,23 +19,23 @@ public class FirebaseHandler {
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
-    public void createOrder(int durationMinutes) {
+    public void createGroupOrder(int durationMinutes) {
         DatabaseReference newOrderRef = mDatabase.child("orders").push();
         GroupOrder groupOrder = new GroupOrder(durationMinutes);
         newOrderRef.setValue(groupOrder);
     }
 
-    public void addHalf(HalfPizza pizza) {
-        DatabaseReference newHalfPizzaRef = mDatabase.child("halfPizzas").push();
-        newHalfPizzaRef.setValue(pizza);
+    public void addOrder(OrderItem pizza) {
+        DatabaseReference newPizzaRef;
+        if (pizza instanceof HalfPizza) {
+            newPizzaRef = mDatabase.child("halfPizzas").push();
+        } else {
+            newPizzaRef = mDatabase.child("wholePizzas").push();
+        }
+        newPizzaRef.setValue(pizza);
     }
 
-    public void addWhole(WholePizza pizza) {
-        DatabaseReference newWholePizzaRef = mDatabase.child("wholePizzas").push();
-        newWholePizzaRef.setValue(pizza);
-    }
-
-    public void closeOrder(String uid) {
+    public void closeGroupOrder(String uid) {
         DatabaseReference oldOrderRef = mDatabase.child("orders").child(uid);
         oldOrderRef.child("isClosed").setValue(true);
     }

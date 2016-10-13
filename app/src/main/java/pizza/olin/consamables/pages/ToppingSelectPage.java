@@ -74,7 +74,9 @@ public class ToppingSelectPage extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Topping topping = (Topping) parent.getItemAtPosition(position);
-                mListener.setFirstHalfTopping(index, topping);
+                if (topping.getName() != "None") {
+                    mListener.setFirstHalfTopping(index, topping);
+                }
             }
 
             @Override
