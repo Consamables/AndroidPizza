@@ -132,8 +132,8 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
         toppingsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<Topping> toppings = new ArrayList<Topping>();
-                toppings.add(new Topping("None"));
+                ArrayList<Topping> toppings = new ArrayList<>();
+                toppings.add(new Topping("None")); // I don't want a topping option
                 for (DataSnapshot toppingSnapshot : dataSnapshot.getChildren()) {
                     toppings.add(new Topping(toppingSnapshot.getValue(String.class)));
                 }
@@ -164,14 +164,16 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
             }
         }
 
-
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_admin_page:
+                Intent intent = new Intent(this, AdminPageActivity.class);
+                startActivity(intent);
+                return true;
             case R.id.action_sign_out:
                 AuthUI.getInstance()
                         .signOut(this)

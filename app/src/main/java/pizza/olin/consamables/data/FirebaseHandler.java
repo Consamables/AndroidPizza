@@ -18,9 +18,9 @@ public class FirebaseHandler {
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
-    public void createOrder(int duration) {
+    public void createOrder(int durationMinutes) {
         DatabaseReference newOrderRef = mDatabase.child("orders").push();
-        GroupOrder groupOrder = new GroupOrder(duration);
+        GroupOrder groupOrder = new GroupOrder(durationMinutes);
         newOrderRef.setValue(groupOrder);
     }
 
@@ -32,5 +32,10 @@ public class FirebaseHandler {
     public void addWhole(WholePizza pizza) {
         DatabaseReference newWholePizzaRef = mDatabase.child("wholePizzas").push();
         newWholePizzaRef.setValue(pizza);
+    }
+
+    public void closeOrder(String uid) {
+        DatabaseReference oldOrderRef = mDatabase.child("orders").child(uid);
+        oldOrderRef.child("isClosed").setValue(true);
     }
 }
