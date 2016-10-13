@@ -2,11 +2,11 @@ package pizza.olin.consamables;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,10 +28,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import pizza.olin.consamables.data.SharedPrefsHandler;
+import pizza.olin.consamables.types.PizzaOrderType;
 import pizza.olin.consamables.types.Topping;
 
-public class WizardActivity extends AppCompatActivity {
-
+public class WizardActivity extends AppCompatActivity implements HalfOrWholePage.PizzaTypeListener {
     private static final String TAG = "WizardActivity";
     private static final String ANONYMOUS = "anonymous";
     private static final int RC_SIGN_IN = 47;
@@ -50,8 +50,8 @@ public class WizardActivity extends AppCompatActivity {
 
         assert pager != null;
         ArrayList<Fragment> wizardSteps = new ArrayList<>();
-        wizardSteps.add(WizardBasicPage.newInstance("Half or whole?"));
-        wizardSteps.add(new ToppingSelectFragment());
+        wizardSteps.add(HalfOrWholePage.newInstance());
+        wizardSteps.add(ToppingSelectFragment.newInstance());
         wizardSteps.add(WizardBasicPage.newInstance("Add a drink?"));
         wizardSteps.add(WizardBasicPage.newInstance("Pay"));
         wizardSteps.add(WizardBasicPage.newInstance("You're done!"));
@@ -111,7 +111,7 @@ public class WizardActivity extends AppCompatActivity {
                 String mEmail = mFirebaseUser.getEmail();
                 if (!mEmail.endsWith("@students.olin.edu")) {
                     Toast.makeText(this, getString(R.string.no_olin_email), Toast.LENGTH_LONG)
-                    .show();
+                            .show();
                 }
             }
         }
@@ -163,5 +163,10 @@ public class WizardActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void setPizzaType(PizzaOrderType type) {
+
     }
 }

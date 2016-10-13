@@ -4,7 +4,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import pizza.olin.consamables.types.HalfPizza;
-import pizza.olin.consamables.types.Order;
+import pizza.olin.consamables.types.GroupOrder;
 import pizza.olin.consamables.types.WholePizza;
 
 /**
@@ -20,8 +20,8 @@ public class FirebaseHandler {
 
     public void createOrder(int duration) {
         DatabaseReference newOrderRef = mDatabase.child("orders").push();
-        Order order = new Order(duration);
-        newOrderRef.setValue(order);
+        GroupOrder groupOrder = new GroupOrder(duration);
+        newOrderRef.setValue(groupOrder);
     }
 
     public void addHalf(HalfPizza pizza) {

@@ -19,6 +19,10 @@ import pizza.olin.consamables.types.Topping;
 
 public class ToppingSelectFragment extends Fragment {
 
+    public static ToppingSelectFragment newInstance() {
+        return new ToppingSelectFragment();
+    }
+
     private SharedPrefsHandler prefsHandler;
 
     @Override

@@ -1,14 +1,19 @@
 package pizza.olin.consamables.types;
 
+import com.annimon.stream.Stream;
+import com.annimon.stream.function.BiFunction;
+import com.annimon.stream.function.Consumer;
+import com.annimon.stream.function.Function;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
-public class HalfPizza {
-
+public class HalfPizza extends OrderItem {
     private String uid;
     private FirebaseUser user;
     private ArrayList<Topping> toppings;
+
+    private int priceCents;
 
     public HalfPizza() { }
 
@@ -39,5 +44,31 @@ public class HalfPizza {
 
     public void setToppings(ArrayList<Topping> toppings) {
         this.toppings = toppings;
+    }
+
+    @Override
+    public int getPriceCents() {
+        return priceCents;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return "Half Pizza";
+    }
+
+    @Override
+    public String getDisplayDetails() {
+        return user.getDisplayName() + ": " +
+                Stream.of(toppings)
+                .reduce("", new BiFunction<String, Topping, String>() {
+                    @Override
+                    public String apply(String before, Topping topping) {
+                        if (before.length() > 0) { // if not the first element
+                            return before + ", " + topping.getName();
+                        }
+
+                        return before + topping.getName();
+                    }
+                });
     }
 }
