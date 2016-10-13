@@ -268,6 +268,11 @@ public class WizardActivity extends AppCompatActivity
     }
 
     @Override
+    public void clearToppings() {
+        orderBuilder.clearToppings();
+    }
+
+    @Override
     public void setBeverage(Beverage beverage) {
         orderBuilder.setBeverage(beverage);
     }

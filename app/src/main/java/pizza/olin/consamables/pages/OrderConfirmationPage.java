@@ -23,7 +23,6 @@ import pizza.olin.consamables.types.OrderItem;
 public class OrderConfirmationPage extends Fragment {
 
     private OrderConfirmationListener mListener;
-    private SharedPrefsHandler prefsHandler;
 
     private OrderItem thisOrder;
 

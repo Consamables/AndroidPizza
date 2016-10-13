@@ -47,6 +47,11 @@ public class OrderBuilder {
         secondHalfToppings.put(index, topping);
     }
 
+    public void clearToppings() {
+        firstHalfToppings.clear();
+        secondHalfToppings.clear();
+    }
+
     public void setBeverage(Beverage beverage) {
         this.beverage = beverage;
     }

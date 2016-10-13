@@ -39,8 +39,8 @@ public class ToppingSelectPage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         viewOptions = new HashMap<>();
-        viewOptions.put(PizzaOrderType.HALF, R.layout.fragment_half_topping_select_page);
-        viewOptions.put(PizzaOrderType.WHOLE, R.layout.fragment_whole_topping_select_page);
+        viewOptions.put(PizzaOrderType.HALF, R.id.half_topping_layout);
+        viewOptions.put(PizzaOrderType.WHOLE, R.id.whole_topping_layout);
 
         prefsHandler = new SharedPrefsHandler(getActivity().getPreferences(Context.MODE_PRIVATE));
 
@@ -55,7 +55,7 @@ public class ToppingSelectPage extends Fragment {
         }
 
         configureView(toppingView);
-         ((ViewGroup) myView).addView(toppingView);
+        ((ViewGroup) myView).addView(toppingView);
 
         return myView;
     }
@@ -65,13 +65,23 @@ public class ToppingSelectPage extends Fragment {
         super.setUserVisibleHint(isVisible);
 
         if (isVisible) {
+            PizzaOrderType pizzaType = mListener.getPizzaType();
             ViewGroup parent = (ViewGroup) getView();
             View currentView = parent.getChildAt(0);
-            int optionId = viewOptions.get(mListener.getPizzaType());
+            int currentViewId = currentView.getId();
+            int targetViewId = viewOptions.get(pizzaType);
+            int layoutId;
 
-            if (currentView.getId() != optionId) {
+            if (currentViewId != targetViewId) {
+                mListener.clearToppings();
                 parent.removeView(currentView);
-                currentView = getActivity().getLayoutInflater().inflate(optionId, parent, false);
+
+                if (pizzaType == PizzaOrderType.HALF) {
+                    layoutId = R.layout.fragment_half_topping_select_page;
+                } else {
+                    layoutId = R.layout.fragment_whole_topping_select_page;
+                }
+                currentView = getActivity().getLayoutInflater().inflate(layoutId, parent, false);
                 configureView(currentView);
                 parent.addView(currentView, 0);
             }
@@ -172,6 +182,8 @@ public class ToppingSelectPage extends Fragment {
         void setFirstHalfTopping(int index, Topping topping);
 
         void setSecondHalfTopping(int index, Topping topping);
+
+        void clearToppings();
 
         PizzaOrderType getPizzaType();
     }
