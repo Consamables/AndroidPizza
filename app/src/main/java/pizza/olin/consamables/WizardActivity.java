@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,10 +28,16 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import pizza.olin.consamables.data.SharedPrefsHandler;
+import pizza.olin.consamables.pages.BeverageSelectPage;
+import pizza.olin.consamables.pages.HalfOrWholePage;
+import pizza.olin.consamables.pages.ToppingSelectPage;
+import pizza.olin.consamables.pages.WizardBasicPage;
+import pizza.olin.consamables.types.Beverage;
+import pizza.olin.consamables.types.OrderBuilder;
 import pizza.olin.consamables.types.PizzaOrderType;
 import pizza.olin.consamables.types.Topping;
 
-public class WizardActivity extends AppCompatActivity implements HalfOrWholePage.PizzaTypeListener {
+public class WizardActivity extends AppCompatActivity implements HalfOrWholePage.PizzaTypeListener, ToppingSelectPage.ToppingSelectListener, BeverageSelectPage.BeverageTypeListener {
     private static final String TAG = "WizardActivity";
     private static final String ANONYMOUS = "anonymous";
     private static final int RC_SIGN_IN = 47;
@@ -41,6 +46,8 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
     private String mUsername;
 
     private SharedPrefsHandler prefsHandler;
+
+    private OrderBuilder orderBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +59,12 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
         assert pager != null;
         ArrayList<Fragment> wizardSteps = new ArrayList<>();
         wizardSteps.add(HalfOrWholePage.newInstance());
-        wizardSteps.add(ToppingSelectFragment.newInstance());
-        wizardSteps.add(WizardBasicPage.newInstance("Add a drink?"));
+        wizardSteps.add(ToppingSelectPage.newInstance());
+        wizardSteps.add(BeverageSelectPage.newInstance());
         wizardSteps.add(WizardBasicPage.newInstance("Pay"));
         wizardSteps.add(WizardBasicPage.newInstance("You're done!"));
 
-
         pager.setAdapter(new WizardPagerAdapter(getSupportFragmentManager(), wizardSteps));
-
 
         Button previousButton = (Button) findViewById(R.id.prev_button);
         Button nextButton = (Button) findViewById(R.id.next_button);
@@ -123,6 +128,8 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
                 }
             }
         }
+
+        orderBuilder = new OrderBuilder();
     }
 
     private void fetchFirebaseData() {
@@ -138,6 +145,25 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
                     toppings.add(new Topping(toppingSnapshot.getValue(String.class)));
                 }
                 prefsHandler.setToppings(toppings);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference beveragesRef = database.getReference("beverages");
+
+        beveragesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Beverage> beverages = new ArrayList<>();
+                beverages.add(new Beverage("No Thanks", 0));
+                for (DataSnapshot beverageSnapshot : dataSnapshot.getChildren()) {
+                    beverages.add(beverageSnapshot.getValue(Beverage.class));
+                }
+                prefsHandler.setBeverages(beverages);
             }
 
             @Override
@@ -192,6 +218,21 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
 
     @Override
     public void setPizzaType(PizzaOrderType type) {
+        orderBuilder.setPizzaType(type);
+    }
 
+    @Override
+    public void setFirstHalfTopping(int index, Topping topping) {
+        orderBuilder.setFirstHalfTopping(index, topping);
+    }
+
+    @Override
+    public void setSecondHalfTopping(int index, Topping topping) {
+        orderBuilder.setSecondHalfTopping(index, topping);
+    }
+
+    @Override
+    public void setBeverage(Beverage beverage) {
+        orderBuilder.setBeverage(beverage);
     }
 }

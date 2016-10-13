@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
+import pizza.olin.consamables.types.Beverage;
 import pizza.olin.consamables.types.GroupOrder;
 import pizza.olin.consamables.types.Topping;
 
@@ -34,6 +35,10 @@ public class SharedPrefsHandler {
         setValue("Current Order", order);
     }
 
+    public void setBeverages(ArrayList<Beverage> beverages) {
+        setValue("Beverages", beverages);
+    }
+
     public ArrayList<Topping> getToppings() {
         String serializedToppings = prefs.getString("Toppings", "[]");
         ArrayList<Topping> allToppings = gson.fromJson(serializedToppings, new TypeToken<ArrayList<Topping>>(){}.getType());
@@ -44,5 +49,11 @@ public class SharedPrefsHandler {
         String serializedOrder = prefs.getString("Current Order", "");
         GroupOrder order = gson.fromJson(serializedOrder, GroupOrder.class);
         return order;
+    }
+
+    public ArrayList<Beverage> getBeverages() {
+        String serializedBeverages = prefs.getString("Beverages", "[]");
+        ArrayList<Beverage> allBeverages = gson.fromJson(serializedBeverages, new TypeToken<ArrayList<Beverage>>(){}.getType());
+        return allBeverages;
     }
 }
