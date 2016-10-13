@@ -6,8 +6,6 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import pizza.olin.consamables.data.FirebaseHandler;
-
 public class OrderBuilder {
     private PizzaOrderType pizzaType;
     private HashMap<Integer, Topping> firstHalfToppings;

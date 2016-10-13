@@ -1,4 +1,4 @@
-package pizza.olin.consamables;
+package pizza.olin.consamables.pages;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
+import pizza.olin.consamables.R;
+import pizza.olin.consamables.ToppingAdapter;
 import pizza.olin.consamables.data.SharedPrefsHandler;
 import pizza.olin.consamables.types.Topping;
 
@@ -21,16 +23,15 @@ import pizza.olin.consamables.types.Topping;
 public class ToppingSelectPage extends Fragment {
 
     private ToppingSelectListener mListener;
+    private SharedPrefsHandler prefsHandler;
 
     public static ToppingSelectPage newInstance() {
         return new ToppingSelectPage();
     }
 
-    private SharedPrefsHandler prefsHandler;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View myView = inflater.inflate(R.layout.fragment_topping_select, container, false);
+        View myView = inflater.inflate(R.layout.fragment_topping_select_page, container, false);
 
         prefsHandler = new SharedPrefsHandler(getActivity().getPreferences(Context.MODE_PRIVATE));
         final ArrayList<Topping> allToppings = prefsHandler.getToppings();

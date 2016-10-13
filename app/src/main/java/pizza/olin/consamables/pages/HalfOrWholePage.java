@@ -1,4 +1,4 @@
-package pizza.olin.consamables;
+package pizza.olin.consamables.pages;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import pizza.olin.consamables.R;
 import pizza.olin.consamables.types.PizzaOrderType;
 
 public class HalfOrWholePage extends Fragment {

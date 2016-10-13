@@ -28,11 +28,16 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import pizza.olin.consamables.data.SharedPrefsHandler;
+import pizza.olin.consamables.pages.BeverageSelectPage;
+import pizza.olin.consamables.pages.HalfOrWholePage;
+import pizza.olin.consamables.pages.ToppingSelectPage;
+import pizza.olin.consamables.pages.WizardBasicPage;
+import pizza.olin.consamables.types.Beverage;
 import pizza.olin.consamables.types.OrderBuilder;
 import pizza.olin.consamables.types.PizzaOrderType;
 import pizza.olin.consamables.types.Topping;
 
-public class WizardActivity extends AppCompatActivity implements HalfOrWholePage.PizzaTypeListener, ToppingSelectPage.ToppingSelectListener {
+public class WizardActivity extends AppCompatActivity implements HalfOrWholePage.PizzaTypeListener, ToppingSelectPage.ToppingSelectListener, BeverageSelectPage.BeverageTypeListener {
     private static final String TAG = "WizardActivity";
     private static final String ANONYMOUS = "anonymous";
     private static final int RC_SIGN_IN = 47;
@@ -55,7 +60,7 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
         ArrayList<Fragment> wizardSteps = new ArrayList<>();
         wizardSteps.add(HalfOrWholePage.newInstance());
         wizardSteps.add(ToppingSelectPage.newInstance());
-        wizardSteps.add(WizardBasicPage.newInstance("Add a drink?"));
+        wizardSteps.add(BeverageSelectPage.newInstance());
         wizardSteps.add(WizardBasicPage.newInstance("Pay"));
         wizardSteps.add(WizardBasicPage.newInstance("You're done!"));
 
@@ -127,12 +132,31 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
         toppingsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<Topping> toppings = new ArrayList<Topping>();
+                ArrayList<Topping> toppings = new ArrayList<>();
                 toppings.add(new Topping("None"));
                 for (DataSnapshot toppingSnapshot : dataSnapshot.getChildren()) {
                     toppings.add(new Topping(toppingSnapshot.getValue(String.class)));
                 }
                 prefsHandler.setToppings(toppings);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        final DatabaseReference beveragesRef = database.getReference("beverages");
+
+        beveragesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Beverage> beverages = new ArrayList<>();
+                beverages.add(new Beverage("No Thanks", 0));
+                for (DataSnapshot beverageSnapshot : dataSnapshot.getChildren()) {
+                    beverages.add(beverageSnapshot.getValue(Beverage.class));
+                }
+                prefsHandler.setBeverages(beverages);
             }
 
             @Override
@@ -181,5 +205,10 @@ public class WizardActivity extends AppCompatActivity implements HalfOrWholePage
     @Override
     public void setSecondHalfTopping(int index, Topping topping) {
         orderBuilder.setSecondHalfTopping(index, topping);
+    }
+
+    @Override
+    public void setBeverage(Beverage beverage) {
+        orderBuilder.setBeverage(beverage);
     }
 }
