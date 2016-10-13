@@ -55,6 +55,7 @@ public class WizardActivity extends AppCompatActivity
 
     private SharedPrefsHandler prefsHandler;
     private OrderBuilder orderBuilder;
+    private ViewPager pager;
     private FirebaseHandler firebaseHandler;
 
     @Override
@@ -62,6 +63,7 @@ public class WizardActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wizard);
 
+        pager = (ViewPager) findViewById(R.id.pager);
         orderBuilder = new OrderBuilder();
         firebaseHandler = new FirebaseHandler();
         prefsHandler = new SharedPrefsHandler(getPreferences(Context.MODE_PRIVATE));
@@ -252,6 +254,7 @@ public class WizardActivity extends AppCompatActivity
     @Override
     public void setPizzaType(PizzaOrderType type) {
         orderBuilder.setPizzaType(type);
+        pager.setCurrentItem(pager.getCurrentItem() + 1, true);
     }
 
     @Override

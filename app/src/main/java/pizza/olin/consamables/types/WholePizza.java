@@ -38,6 +38,11 @@ public class WholePizza extends OrderItem {
     }
 
     @Override
+    public String getPerson() {
+        return leftHalf.getPerson() + " | " + rightHalf.getPerson();
+    }
+
+    @Override
     public String getDisplayName() {
         return "Whole Pizza";
     }

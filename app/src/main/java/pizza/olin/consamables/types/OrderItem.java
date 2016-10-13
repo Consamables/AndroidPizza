@@ -6,6 +6,7 @@ public abstract class OrderItem {
     private String orderId;
 
     public abstract int getPriceCents();
+    public abstract String getPerson();
     public abstract String getDisplayName();
     public abstract String getDisplayDetails();
 

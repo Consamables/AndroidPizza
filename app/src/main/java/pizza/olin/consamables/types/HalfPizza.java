@@ -49,6 +49,11 @@ public class HalfPizza extends OrderItem {
     }
 
     @Override
+    public String getPerson() {
+        return user.getDisplayName();
+    }
+
+    @Override
     public String getDisplayName() {
         return "Half Pizza";
     }

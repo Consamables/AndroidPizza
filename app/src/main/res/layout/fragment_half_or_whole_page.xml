@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,13 +7,32 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <TextView
+        android:text="@string/pizza_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:id="@+id/beverage_select_heading"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:weightSum="1"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@mipmap/half_pizza_icon"
+            android:id="@+id/imageView" />
 
         <Button
             android:text="@string/half_pizza"
@@ -31,5 +51,13 @@
             style="@style/Widget.AppCompat.Button"
             android:textSize="36sp"
             android:backgroundTint="@color/colorPrimaryLight" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@mipmap/whole_pizza_icon"
+            android:id="@+id/imageView2" />
+
     </LinearLayout>
+
 </RelativeLayout>
