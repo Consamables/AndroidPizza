@@ -17,6 +17,6 @@ import pizza.olin.consamables.types.Topping;
 public class ToppingAdapter extends ArrayAdapter<Topping> {
 
     public ToppingAdapter(Context context, ArrayList<Topping> toppings) {
-        super(context, 0, toppings);
+        super(context, R.layout.support_simple_spinner_dropdown_item, toppings);
     }
 }

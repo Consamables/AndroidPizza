@@ -10,7 +10,7 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-import pizza.olin.consamables.database.SharedPrefsHandler;
+import pizza.olin.consamables.data.SharedPrefsHandler;
 import pizza.olin.consamables.types.Topping;
 
 /**

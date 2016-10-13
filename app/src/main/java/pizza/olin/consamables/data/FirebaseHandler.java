@@ -1,4 +1,4 @@
-package pizza.olin.consamables.database;
+package pizza.olin.consamables.data;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;

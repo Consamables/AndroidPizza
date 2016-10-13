@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +19,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,10 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import pizza.olin.consamables.database.SharedPrefsHandler;
+import pizza.olin.consamables.data.SharedPrefsHandler;
 import pizza.olin.consamables.types.Topping;
-
-import java.util.ArrayList;
 
 public class WizardActivity extends AppCompatActivity {
 
@@ -55,7 +51,7 @@ public class WizardActivity extends AppCompatActivity {
         assert pager != null;
         ArrayList<Fragment> wizardSteps = new ArrayList<>();
         wizardSteps.add(WizardBasicPage.newInstance("Half or whole?"));
-        wizardSteps.add(WizardBasicPage.newInstance("Toppinggss"));
+        wizardSteps.add(new ToppingSelectFragment());
         wizardSteps.add(WizardBasicPage.newInstance("Add a drink?"));
         wizardSteps.add(WizardBasicPage.newInstance("Pay"));
         wizardSteps.add(WizardBasicPage.newInstance("You're done!"));
@@ -128,7 +124,11 @@ public class WizardActivity extends AppCompatActivity {
         toppingsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<Topping> toppings = dataSnapshot.getValue(new ArrayList<Topping>(){}.getClass());
+                ArrayList<Topping> toppings = new ArrayList<Topping>();
+                toppings.add(new Topping("None"));
+                for (DataSnapshot toppingSnapshot : dataSnapshot.getChildren()) {
+                    toppings.add(new Topping(toppingSnapshot.getValue(String.class)));
+                }
                 prefsHandler.setToppings(toppings);
             }
 
