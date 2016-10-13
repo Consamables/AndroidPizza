@@ -9,7 +9,7 @@
     <com.badoualy.stepperindicator.StepperIndicator
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:stpi_stepCount="5"/>
+        app:stpi_stepCount="4"/>
     <LinearLayout
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"

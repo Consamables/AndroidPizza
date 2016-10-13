@@ -33,6 +33,8 @@ dependencies {
 
     compile 'com.firebaseui:firebase-ui-auth:0.6.0'
     compile 'com.github.badoualy:stepper-indicator:1.0.6'
+
+    compile 'com.google.code.gson:gson:2.2.4'
 }
 
 apply plugin: 'com.google.gms.google-services'

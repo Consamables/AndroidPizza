@@ -11,10 +11,10 @@ import pizza.olin.consamables.types.WholePizza;
  * An interface for writing data to Firebase.
  */
 
-public class DataHandler {
+public class FirebaseHandler {
     private DatabaseReference mDatabase;
 
-    public DataHandler() {
+    public FirebaseHandler() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
