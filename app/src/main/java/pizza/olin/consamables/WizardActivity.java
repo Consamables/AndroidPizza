@@ -28,8 +28,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import pizza.olin.consamables.data.FirebaseHandler;
 import pizza.olin.consamables.data.SharedPrefsHandler;
 import pizza.olin.consamables.pages.BeverageSelectPage;
+import pizza.olin.consamables.pages.FinishedOrderPage;
 import pizza.olin.consamables.pages.HalfOrWholePage;
 import pizza.olin.consamables.pages.OrderConfirmationPage;
 import pizza.olin.consamables.pages.ToppingSelectPage;
@@ -42,7 +44,8 @@ import pizza.olin.consamables.types.Topping;
 
 public class WizardActivity extends AppCompatActivity
                             implements HalfOrWholePage.PizzaTypeListener, ToppingSelectPage.ToppingSelectListener,
-                                       BeverageSelectPage.BeverageTypeListener, OrderConfirmationPage.OrderConfirmationListener {
+                                       BeverageSelectPage.BeverageTypeListener, OrderConfirmationPage.OrderConfirmationListener,
+                                       FinishedOrderPage.FinishedOrderListener {
     private static final String TAG = "WizardActivity";
     private static final String ANONYMOUS = "anonymous";
     private static final int RC_SIGN_IN = 47;
@@ -51,8 +54,8 @@ public class WizardActivity extends AppCompatActivity
     private String mUsername;
 
     private SharedPrefsHandler prefsHandler;
-
     private OrderBuilder orderBuilder;
+    private FirebaseHandler firebaseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,7 @@ public class WizardActivity extends AppCompatActivity
         setContentView(R.layout.activity_wizard);
 
         orderBuilder = new OrderBuilder();
-
+        firebaseHandler = new FirebaseHandler();
         prefsHandler = new SharedPrefsHandler(getPreferences(Context.MODE_PRIVATE));
         fetchFirebaseData();
 
@@ -72,7 +75,7 @@ public class WizardActivity extends AppCompatActivity
         wizardSteps.add(ToppingSelectPage.newInstance());
         wizardSteps.add(BeverageSelectPage.newInstance());
         wizardSteps.add(OrderConfirmationPage.newInstance());
-        wizardSteps.add(WizardBasicPage.newInstance("You're done!"));
+        wizardSteps.add(FinishedOrderPage.newInstance());
 
         pager.setAdapter(new WizardPagerAdapter(getSupportFragmentManager(), wizardSteps));
 
@@ -270,6 +273,6 @@ public class WizardActivity extends AppCompatActivity
 
     @Override
     public void confirmOrder() {
-
+        firebaseHandler.addOrder(orderBuilder.build());
     }
 }
