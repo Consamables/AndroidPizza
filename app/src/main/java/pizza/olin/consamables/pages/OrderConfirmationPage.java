@@ -79,7 +79,7 @@ public class OrderConfirmationPage extends Fragment {
             mListener = (OrderConfirmationListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement BeverageTypeListener");
+                    + " must implement OrderConfirmationListener");
         }
     }
 
