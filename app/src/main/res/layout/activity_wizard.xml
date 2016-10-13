@@ -7,9 +7,20 @@
     android:layout_height="match_parent"
     tools:context="pizza.olin.consamables.WizardActivity">
     <com.badoualy.stepperindicator.StepperIndicator
+        android:id="@+id/stepper_indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        app:stpi_showStepNumberInstead="false"
+        android:layout_marginTop="32dp"
         app:stpi_stepCount="4"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <LinearLayout
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
@@ -20,24 +31,20 @@
         android:layout_alignParentStart="true">
 
         <Button
-            style="?android:attr/buttonBarButtonStyle"
-            android:background="@drawable/selectable_item_background"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:id="@+id/prev_button"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/prev"
-            android:textColor="@color/colorPrimary"/>
+            android:text="@string/prev"/>
 
         <Button
-            style="?android:attr/buttonBarButtonStyle"
-            android:background="@drawable/selectable_item_background"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:id="@+id/next_button"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/next"
-            android:textColor="@color/colorPrimary"/>
+            android:text="@string/next"/>
 
     </LinearLayout>
 </RelativeLayout>

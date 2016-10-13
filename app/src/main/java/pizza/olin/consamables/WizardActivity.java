@@ -3,13 +3,18 @@ package pizza.olin.consamables;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.badoualy.stepperindicator.StepperIndicator;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,6 +32,8 @@ import java.util.ArrayList;
 import pizza.olin.consamables.database.SharedPrefsHandler;
 import pizza.olin.consamables.types.Topping;
 
+import java.util.ArrayList;
+
 public class WizardActivity extends AppCompatActivity {
 
     private static final String TAG = "WizardActivity";
@@ -43,11 +50,53 @@ public class WizardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wizard);
 
+        final ViewPager pager = (ViewPager) findViewById(R.id.pager);
+
+        assert pager != null;
+        ArrayList<Fragment> wizardSteps = new ArrayList<>();
+        wizardSteps.add(WizardBasicPage.newInstance("Half or whole?"));
+        wizardSteps.add(WizardBasicPage.newInstance("Toppinggss"));
+        wizardSteps.add(WizardBasicPage.newInstance("Add a drink?"));
+        wizardSteps.add(WizardBasicPage.newInstance("Pay"));
+        wizardSteps.add(WizardBasicPage.newInstance("You're done!"));
+
+
+        pager.setAdapter(new WizardPagerAdapter(getSupportFragmentManager(), wizardSteps));
+
+
+        Button previousButton = (Button) findViewById(R.id.prev_button);
+        Button nextButton = (Button) findViewById(R.id.next_button);
+
+        previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pager.setCurrentItem(pager.getCurrentItem() - 1);
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pager.setCurrentItem(pager.getCurrentItem() + 1);
+            }
+        });
+
+        StepperIndicator indicator = (StepperIndicator) findViewById(R.id.stepper_indicator);
+        assert indicator != null;
+        // We keep last page for a "finishing" page
+        indicator.setViewPager(pager, true);
+
+        indicator.addOnStepClickListener(new StepperIndicator.OnStepClickListener() {
+            @Override
+            public void onStepClicked(int step) {
+                pager.setCurrentItem(step, true);
+            }
+        });
+
         mUsername = ANONYMOUS;
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-
 
         if (mFirebaseUser == null) {
             // Not signed in, launch the Sign In activity
