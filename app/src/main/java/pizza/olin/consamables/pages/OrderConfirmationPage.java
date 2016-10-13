@@ -91,7 +91,5 @@ public class OrderConfirmationPage extends Fragment {
 
     public interface OrderConfirmationListener {
         OrderItem getCurrentOrder();
-
-        void confirmOrder();
     }
 }
