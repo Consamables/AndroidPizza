@@ -35,19 +35,27 @@ public class HalfOrWholePage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_half_or_whole_page, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_half_or_whole_page, container, false);
 
-    public void onHalfPizzaButtonPressed() {
-        if (mListener != null) {
-            mListener.setPizzaType(PizzaOrderType.HALF);
-        }
-    }
+        view.findViewById(R.id.button_half).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.setPizzaType(PizzaOrderType.HALF);
+                }
+            }
+        });
 
-    public void onWholePizzaButtonPressed() {
-        if (mListener != null) {
-            mListener.setPizzaType(PizzaOrderType.WHOLE);
-        }
+        view.findViewById(R.id.button_whole).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.setPizzaType(PizzaOrderType.WHOLE);
+                }
+            }
+        });
+
+        return view;
     }
 
     @Override
