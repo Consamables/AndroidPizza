@@ -67,7 +67,10 @@ public class ToppingSelectPage extends Fragment {
         if (isVisible) {
             PizzaOrderType pizzaType = mListener.getPizzaType();
             ViewGroup parent = (ViewGroup) getView();
+
+            // does parent always have at least 1 child?
             View currentView = parent.getChildAt(0);
+
             int currentViewId = currentView.getId();
             int targetViewId = viewOptions.get(pizzaType);
             int layoutId;

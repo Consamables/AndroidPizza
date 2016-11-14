@@ -52,6 +52,7 @@ public class OrderConfirmationPage extends Fragment {
             if (thisOrder.getBeverage() != null) {
                 beverage.setText(thisOrder.getBeverage().getName());
             } else {
+                // This needs to be in strings.xml
                 beverage.setText("None");
             }
         }

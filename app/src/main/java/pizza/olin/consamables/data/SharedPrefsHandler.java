@@ -45,6 +45,7 @@ public class SharedPrefsHandler {
         return allToppings;
     }
 
+    // This method doesn't seem to be used
     public GroupOrder getCurrentOrder() {
         String serializedOrder = prefs.getString("Current Order", "");
         GroupOrder order = gson.fromJson(serializedOrder, GroupOrder.class);

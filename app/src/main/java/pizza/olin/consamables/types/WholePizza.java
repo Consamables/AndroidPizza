@@ -51,6 +51,7 @@ public class WholePizza extends OrderItem {
 
     @Override
     public String getDisplayDetails() {
+        // None of these are used
         ArrayList<Topping> leftToppings = leftHalf.getToppings();
         ArrayList<Topping> rightToppings = rightHalf.getToppings();
         int leftMaxLength = getLeftMaxToppingLength();

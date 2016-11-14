@@ -60,6 +60,7 @@ public class HalfPizza extends OrderItem {
 
     @Override
     public String getDisplayDetails() {
+        // Beautiful
         return Stream.of(toppings)
                 .reduce("", new BiFunction<String, Topping, String>() {
                     @Override

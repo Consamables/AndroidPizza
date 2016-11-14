@@ -20,6 +20,8 @@ import pizza.olin.consamables.types.Beverage;
 public class FinishedOrderPage extends Fragment {
 
     private FinishedOrderListener mListener;
+
+    // This isn't used
     private SharedPrefsHandler prefsHandler;
 
     public FinishedOrderPage() {
