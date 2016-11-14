@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import pizza.olin.consamables.data.FirebaseHandler;
 import pizza.olin.consamables.types.GroupOrder;
@@ -58,6 +59,7 @@ public class AdminPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 boolean isActiveOrder = false;
+                // ^This variable is not used
                 if (maybeNewestOrder.isPresent()) {
                     if (maybeNewestOrder.get().isClosed) {
                         // cool
@@ -137,10 +139,10 @@ public class AdminPageActivity extends AppCompatActivity {
                 countDownTimer = new CountDownTimer(timeLeftInOrder, UPDATE_TIMER_MS) {
 
                     public void onTick(long millisUntilFinished) {
-                        timeLeft.setText(String.format(
-                                "%02d:%02d",
-                                millisUntilFinished / 1000 / 60,
-                                millisUntilFinished / 1000 % 60));
+                        // To make your code more readable, do this:
+                        long minutes = (millisUntilFinished / 1000) / 60;
+                        long seconds = (millisUntilFinished / 1000) % 60;
+                        timeLeft.setText(String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds));
                     }
 
                     public void onFinish() {
@@ -152,6 +154,7 @@ public class AdminPageActivity extends AppCompatActivity {
                     countDownTimer.cancel();
                 }
 
+                // "Time's up" needs to be in strings.xml
                 timeLeft.setText("Time's up!");
             }
         }

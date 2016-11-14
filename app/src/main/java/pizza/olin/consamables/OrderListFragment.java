@@ -34,6 +34,7 @@ public class OrderListFragment extends Fragment {
             orderId = getArguments().getString(ARG_ORDER_ID);
         }
 
+        // What is this?
         if (orderId != null) {
 
         }
@@ -49,6 +50,7 @@ public class OrderListFragment extends Fragment {
     }
 
     public void onButtonPressed(Uri uri) {
+        // What is this?
         if (mListener != null) {
         }
     }

@@ -46,7 +46,8 @@ public class WizardActivity extends AppCompatActivity
                             implements HalfOrWholePage.PizzaTypeListener, ToppingSelectPage.ToppingSelectListener,
                                        BeverageSelectPage.BeverageTypeListener, OrderConfirmationPage.OrderConfirmationListener,
                                        FinishedOrderPage.FinishedOrderListener {
-    private static final String TAG = "WizardActivity";
+    // This is fine, but consider using WizardActivity.class.getName();
+    private static final String TAG = WizardActivity.class.getName();
     private static final String ANONYMOUS = "anonymous";
     private static final int RC_SIGN_IN = 47;
     private FirebaseAuth mFirebaseAuth;
@@ -60,6 +61,8 @@ public class WizardActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // This onCreate is huge. Consider refactoring into separate methods like getWizardSteps(),
+        // and handleEmailVerification()
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wizard);
 
